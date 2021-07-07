@@ -12,7 +12,7 @@ jobs:
     - uses: actions/checkout@v2
       with:
         submodules: true
-        token: ${{ secrets.JAEGERTRACINGBOT_GITHUB_TOKEN }}
+        token: ${{ secrets.PAVOL_TOKEN }}
 
     - uses: actions/setup-python@v2
       with:
@@ -27,3 +27,19 @@ jobs:
         # echo "https://${{ secrets.JAEGERTRACINGBOT_GITHUB_TOKEN }}" > .git/credentials
         export TRAVIS_TAG=${GITHUB_REF##*/}
         ./travis/release.sh
+
+#    - name: Create Pull Request
+#      uses: peter-evans/create-pull-request@v3
+#      with:
+#        base: release-branch
+
+    - name: Create pull request
+      uses: gr2m/create-or-update-pull-request-action@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.PAVOL_TOKEN }}
+      with:
+        title: "My pull request title"
+        body: "My pull request body"
+#        branch: "my-pull-request-base-branch"
+        commit-message: "My commit message for uncommitted changes in lib/ folder"
+        author: "Lorem J. Ipsum <lorem@example.com>"
